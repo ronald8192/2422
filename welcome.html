@@ -1,0 +1,103 @@
+<div class="container" id="page1">
+    <div class="row well" id="instruction-container">
+        <div class="col-md-12 instructionHeader">
+            <h1><b>Step 1 - Prepare the .ics file</b></h1>
+        </div>
+        <div class="col-md-12">
+            <ol class="instruction_ul">
+                <li class="step instruction_li" data-order="1">Login to your <a target="_blank" href="https://www38.polyu.edu.hk/eStudent/secure/my-timetable/download-timetable.jsf">eStudent</a>
+                account and click "Timetable Download" in the home page:
+                </br>
+                <img src="instruction_images/Step1.png" class="imageBorder"/>
+              
+                                            </li>                          
+                                           
+                <li class="step instruction_li" data-order="2">Select a semester timetable and click "Download":
+                </br>
+                <img src="instruction_images/Step2.png" class="imageBorder"/>               
+                </li>
+            </ol>
+        </div>
+    </div>
+    
+    <div class="row text-center" id="genBtn-container">
+        <button id="gen" type="submit" class="btn btn-raised btn-primary">Next Step</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $.material.init();
+
+        $("#gen").click(function(e){
+            $("body").animate({
+                scrollTop: 0
+            }, 400);
+
+            $("#instruction-container").addClass("animated fadeOutLeft");
+            $("#import-file-container").addClass("animated fadeOutRight");
+            $("#color-option-container").addClass("animated fadeOutLeft");
+            $("#genBtn-container").addClass("animated fadeOutRight").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+                Router.route("#step2");
+//                $("#page1").hide(function(){
+//
+//                });
+
+
+
+            });
+
+        });
+
+
+        $("#ics-input").change(function (evt) {
+            //Retrieve the first (and only!) File from the FileList object
+            var f = evt.target.files[0];
+
+            if (f) {
+                var r = new FileReader();
+                r.onload = function (e) {
+                    var ics = {
+                        name: f.name,
+                        type: f.type,
+                        size: f.size, //bytes
+                        content: e.target.result
+                    };
+
+                    if (ics.type == "text/calendar") {
+                        Calendar.icsContent = ics.content;
+                        Calendar.timetableType = parseInt($("input[name=color-option]:checked").val());
+
+                        BtnGenerate.enable(true);
+                    } else {
+                        BtnGenerate.enable(false);
+                    }
+                };
+                r.readAsText(f);
+            } else {
+                //alert("Failed to load file");
+                BtnGenerate.enable(false)
+            }
+        });
+
+        $(".step").click(function(){
+            var well = function(that){
+                switch (that.data("order")){
+                    case 2:
+                        return {id:"import-file-container", class:"pulse"};
+                    case 3:
+                        return {id:"color-option-container", class:"pulse"};
+                    case 4:
+                        return {id:"gen", class:"flash"};
+                    default:
+                        return undefined
+                }
+            }($(this));
+            if(well != undefined){
+                $("#" + well.id).addClass('animated ' + well.class).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+                    $(this).removeClass('animated ' + well.class)
+                });
+            }
+        });
+    })
+</script>

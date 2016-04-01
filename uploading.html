@@ -1,0 +1,34 @@
+<div class="container hidden text-center" id="loading-container">
+    <div class="row" id="loading">
+
+    </div>
+    <div class="row" id="loading-text">
+        Uploading...
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $("#loading").mdLoading();
+        $("#loading-container").removeClass("hidden");
+        setTimeout(function(){
+            //upload file
+
+
+            //upload done
+            $("#loading-text").text("Generating...");
+
+            setTimeout(function(){
+                //timetable ready
+                $("#modal-container").load("upload_finish.html",function(){
+                    //$("#modal-container").find(".modal").show();
+                });
+
+                localStorage.removeItem("timetableID");
+                currentUser = demoUser[Math.floor(Math.random()*demoUser.length)];
+
+                Router.route("#timetable/" + currentUser);
+            },2000);
+        },2000);
+    })
+</script>

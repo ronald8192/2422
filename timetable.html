@@ -1,0 +1,216 @@
+<style type="text/css">
+    .dropdown-menu > li > a {
+        cursor: pointer;;
+    }
+</style>
+<div class="container hidden" id="first-time-remind">
+    <div class="panel panel-success wow flash">
+        <div class="panel-heading">
+            <h3 class="panel-title">Bookmark the link</h3>
+        </div>
+        <div class="panel-body">
+            For quick access, add this page to your bookmark.
+        </div>
+    </div>
+</div>
+<div class="container" id="view-timetable">
+
+    <div class="row text-center wow fadeIn well" id="timetableDisplayBg">
+
+        <!-- List Box Here -->
+
+        <div class="row text-center">
+            <div class="btn-group text-right">
+                <a data-target="#" class="btn btn-raised btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <span id="week-options-selected">Week 1</span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" id="week-options">
+                    <li><a data-week="all">All Week</a></li>
+                    <li><a data-week="1">Week 1</a></li>
+                    <li><a data-week="2">Week 2</a></li>
+                    <li><a data-week="3">Week 3</a></li>
+                    <li><a data-week="4">Week 4</a></li>
+                    <li><a data-week="5">Week 5</a></li>
+                    <li><a data-week="6">Week 6</a></li>
+                    <li><a data-week="7">Week 7</a></li>
+                    <li><a data-week="8">Week 8</a></li>
+                    <li><a data-week="9">Week 9</a></li>
+                    <li><a data-week="10">Week 10</a></li>
+                    <li><a data-week="11">Week 11</a></li>
+                    <li><a data-week="12">Week 12</a></li>
+                    <li><a data-week="13">Week 13</a></li>
+
+                </ul>
+            </div>
+            <div class="btn-group" id="display-color-control">
+                <button data-color="c1" class="btn btn-raised">Color Pattern 1</button>
+                <button data-color="c2" class="btn btn-raised">Color Pattern 2</button>
+                <button data-color="c3" class="btn btn-raised">Color Pattern 3</button>
+            </div>
+        </div>
+
+
+        <div class="row text-center wow fadeIn">
+            <div class="btn-group" id="display-day-control">
+                <button data-day="1" class="btn btn-raised">Mon</button>
+                <button data-day="2" class="btn btn-raised">Tue</button>
+                <button data-day="3" class="btn btn-raised">Wed</button>
+                <button data-day="4" class="btn btn-raised">Thu</button>
+                <button data-day="5" class="btn btn-raised">Fri</button>
+                <button data-day="6" class="btn btn-raised">Sat</button>
+                <button data-day="week" class="btn btn-raised">Full Week</button>
+            </div>
+        </div>
+
+        <div class="row text-center wow fadeIn" data-wow-delay="0.2s">
+            <!--<div class="btn-group" id="display-color-control">-->
+            <!--<button data-color="c1" class="btn btn-raised">Color Pattern 1</button>-->
+            <!--<button data-color="c2" class="btn btn-raised">Color Pattern 2</button>-->
+            <!--<button data-color="c3" class="btn btn-raised">Color Pattern 3</button>-->
+            <!--</div>-->
+        </div>
+
+        <br/>
+
+        <div class="row text-center wow fadeIn" data-wow-delay='0.3s'>
+            <img width="30%" height="30%" id="timetable-image" src="timetable/P1_Monday.png"/>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    // demo user id / current user data in main.js
+
+    $(function () {
+        $.material.init();
+        //show the remind for the first time
+        currentUser = localStorage.getItem("timetableID");
+        var firstUse = localStorage.getItem("timetable-first-use");
+        if (firstUse === null) {
+            $("#first-time-remind").removeClass("hidden");
+            if (window.location.hash.split("/").length == 2) {
+                localStorage.setItem("timetableID", window.location.hash.split("/")[1]);
+                localStorage.setItem("timetable-first-use", false);
+            } else {
+                Router.route("#welcome");
+            }
+        } else {
+
+        }
+
+        var link = window.location.href;
+        history.replaceState(null, document.title, location.pathname + "#welcome");
+        history.pushState(null, document.title, link);
+
+
+        /**
+         * Display day control
+         */
+        $("#display-day-control").find("button").click(function () {
+            $("#display-day-control").find("button").removeClass("btn-info");
+            $(this).addClass("btn-info");
+
+            var color = localStorage.getItem("timetable-display-color");
+            var week = localStorage.getItem("timetable-display-week");
+            var day = $(this).data("day");
+            localStorage.setItem("timetable-display-day", day);
+
+            //TODO: change timetable image (day)
+            console.log({currentUser: currentUser, day: day, color: color, week: week});
+            setTimetableImage("timetable/" + color + "_" + day + ".png", day);
+
+        });
+
+        /**
+         * Display color control
+         */
+        $("#display-color-control").find("button").click(function () {
+            $("#display-color-control").find("button").removeClass("btn-info");
+            $(this).addClass("btn-info");
+
+            var day = localStorage.getItem("timetable-display-day");
+            var week = localStorage.getItem("timetable-display-week");
+            var color = $(this).data("color");
+            localStorage.setItem("timetable-display-color", color);
+
+            //TODO: change timetable image (color)
+            console.log({currentUser: currentUser, day: day, color: color, week: week});;
+            setTimetableImage("timetable/" + color + "_" + day + ".png", day);
+
+        });
+
+
+        //load setting
+        var day = localStorage.getItem("timetable-display-day");
+        var color = localStorage.getItem("timetable-display-color");
+        if (day == null || day != "week") {
+            //select today
+            var nowday = new Date().getDay();
+            nowday = (nowday == 0) ? 1 : nowday;
+            $("#display-day-control").find("button[data-day=" + nowday + "]").click();
+        } else {
+            $("#display-day-control").find("button[data-day=" + day + "]").click();
+        }
+        if (color === null) {
+            $("#display-color-control").find("button[data-color=c1]").click();
+        } else {
+            $("#display-color-control").find("button[data-color=" + color + "]").click();
+        }
+
+        //load current sem week
+        var settingWeek = localStorage.getItem("timetable-display-week"); //load value from setting
+        if(settingWeek == null || settingWeek == undefined || settingWeek != "all"){
+            //if no value or selected one of the week => select current sem week
+            var sem2Week = Math.ceil((Math.floor(((new Date()) - (new Date(new Date().getFullYear(), 0, 0)))/86400000)-10)/7);
+            if(sem2Week >= 5) sem2Week--; //new year week
+            if(sem2Week <= 0 || sem2Week > 13){
+                //current date not in sem 2
+                sem2Week = "all";
+                $("#week-options-selected").text("All Week");
+            }else {
+                $("#week-options-selected").text("Week " + sem2Week);
+            }
+            localStorage.setItem("timetable-display-week",sem2Week);
+        }else{
+            //should be 'all' week here
+            $("#week-options-selected").text("All Week");
+        }
+
+
+        //switch week
+        $("#week-options").find("a").click(function () {
+            var week = $(this).data("week");
+            if (week != "all") {
+                $("#week-options-selected").text("Week " + week);
+            } else {
+                $("#week-options-selected").text("All Week");
+            }
+
+            var day = localStorage.getItem("timetable-display-day");
+            var color = localStorage.getItem("timetable-display-color");
+            localStorage.setItem("timetable-display-week",week);
+            console.log({currentUser: currentUser, day: day, color: color, week: week});
+            //TODO: change timetable image (week)
+
+
+        });
+
+    });
+
+    function setTimetableImage(path, day) {
+        $("#timetable-image").attr({
+            src: path
+        });
+        switch (day) {
+            case "week":
+                $("#timetable-image").attr({width: "60%", height: "60%"});
+                break;
+            default:
+                $("#timetable-image").attr({width: "15%", height: "15%"});
+                break;
+        }
+    }
+</script>
