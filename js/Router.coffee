@@ -11,6 +11,8 @@ window.Router =
         $("#view-main").load "uploading.html"
       when "#timetable"
         $("#view-main").load "timetable.html"
+      when "#step2"
+        $("#view-main").load "step2.html"
     window.location.hash = hash
   routeTimetable: ->
     hash = window.location.hash.split("/")

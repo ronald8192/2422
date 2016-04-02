@@ -18,6 +18,9 @@
           break;
         case "#timetable":
           $("#view-main").load("timetable.html");
+          break;
+        case "#step2":
+          $("#view-main").load("step2.html");
       }
       return window.location.hash = hash;
     },
