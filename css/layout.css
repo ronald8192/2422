@@ -47,7 +47,13 @@ height:80%;
 
 /* timetable */
 #timetableDisplayBg {
-	background-color:rgb(242, 242, 242);
+	/*background-color:rgb(242, 242, 242);*/
+}
+
+#timetable-image{
+	-webkit-box-shadow:  2px 2px 4px grey;
+	-moz-box-shadow:  2px 2px 4px grey;
+	box-shadow:  2px 2px 4px grey;
 }
 
 /* Darg and Drop Upload*/
