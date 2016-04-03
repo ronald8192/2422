@@ -5,16 +5,19 @@
         </div>
         <div class="col-md-12">
             <ol class="instruction_ul">
-                <li class="step instruction_li" data-order="1">Login to your <a target="_blank" href="https://www38.polyu.edu.hk/eStudent/secure/my-timetable/download-timetable.jsf">eStudent</a>
-                account and click "Timetable Download" in the home page:
-                </br>
-                <img src="instruction_images/Step1.png" class="imageBorder"/>
-              
-                                            </li>                          
-                                           
-                <li class="step instruction_li" data-order="2">Select a semester timetable and click "Download":
-                </br>
-                <img src="instruction_images/Step2.png" class="imageBorder"/>               
+                <li class="step instruction_li" data-order="1">
+                    <h4>
+                        Login to your <a target="_blank" href="https://www38.polyu.edu.hk/eStudent/secure/my-timetable/download-timetable.jsf">eStudent</a> account and click "Timetable Download" in the home page:
+                    </h4>
+                    <img src="instruction_images/Step1.png" class="imageBorder"/>
+
+                </li>
+
+                <li class="step instruction_li" data-order="2">
+                    <h4>
+                        Select a semester timetable and click "Download":
+                    </h4>
+                    <img src="instruction_images/Step2.png" class="imageBorder"/>
                 </li>
             </ol>
         </div>
@@ -35,9 +38,9 @@
             }, 400);
 
             $("#instruction-container").addClass("animated fadeOutLeft");
-            $("#import-file-container").addClass("animated fadeOutRight");
+            $("#import-file-container").addClass("animated fadeOutLeft");
             $("#color-option-container").addClass("animated fadeOutLeft");
-            $("#genBtn-container").addClass("animated fadeOutRight").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+            $("#genBtn-container").addClass("animated fadeOutDown").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
                 Router.route("#step2");
 //                $("#page1").hide(function(){
 //

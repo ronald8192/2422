@@ -15,13 +15,16 @@
 </div>
 <div class="container" id="view-timetable">
 
+    <div class="row text-center instructionHeader">
+        <h4><b id="weekText">All Week - From Jan 11 to 17 Apr, 2016</b></h4>
+    </div>
+    
     <div class="row text-center wow fadeIn well" id="timetableDisplayBg">
-
         <!-- List Box Here -->
 
         <div class="row text-center">
             <div class="btn-group text-right">
-                <a data-target="#" class="btn btn-raised btn-primary dropdown-toggle" data-toggle="dropdown">
+                <a data-target="#" class="btn btn-raised btn-info dropdown-toggle" data-toggle="dropdown">
                     <span id="week-options-selected">Week 1</span>
                     <span class="caret"></span>
                 </a>
@@ -120,7 +123,7 @@
 
             //TODO: change timetable image (day)
             console.log({currentUser: currentUser, day: day, color: color, week: week});
-            setTimetableImage("timetable/" + color + "_" + day + ".png", day);
+            checkOptions(color, day, week);
 
         });
 
@@ -138,7 +141,7 @@
 
             //TODO: change timetable image (color)
             console.log({currentUser: currentUser, day: day, color: color, week: week});;
-            setTimetableImage("timetable/" + color + "_" + day + ".png", day);
+            checkOptions(color, day, week);
 
         });
 
@@ -185,8 +188,24 @@
             var week = $(this).data("week");
             if (week != "all") {
                 $("#week-options-selected").text("Week " + week);
+				switch(week) {
+					case 1:	$("#weekText").text("Week " + week + " - From 11 Jan to 17 Jan, 2016"); break;
+					case 2:	$("#weekText").text("Week " + week + " - From 18 Jan to 24 Jan, 2016"); break;
+					case 3:	$("#weekText").text("Week " + week + " - From 25 Jan to 31 Jan, 2016"); break;
+					case 4:	$("#weekText").text("Week " + week + " - From 01 Feb to 07 Feb, 2016"); break;
+					case 5:	$("#weekText").text("Week " + week + " - From 15 Feb to 21 Apr, 2016"); break;
+					case 6:	$("#weekText").text("Week " + week + " - From 22 Feb to 28 Feb, 2016"); break;
+					case 7:	$("#weekText").text("Week " + week + " - From 29 Feb to 06 Mar, 2016"); break;
+					case 8:	$("#weekText").text("Week " + week + " - From 07 Mar to 13 Mar, 2016"); break;
+					case 9:	$("#weekText").text("Week " + week + " - From 14 Mar to 20 Mar, 2016"); break;
+					case 10:$("#weekText").text("Week " + week + " - From 21 Mar to 27 Mar, 2016"); break;
+					case 11:$("#weekText").text("Week " + week + " - From 28 Mar to 03 Apr, 2016"); break;
+					case 12:$("#weekText").text("Week " + week + " - From 04 Apr to 10 Apr, 2016"); break;
+					case 13:$("#weekText").text("Week " + week + " - From 11 Apr to 17 Apr, 2016"); break;					
+				}
             } else {
                 $("#week-options-selected").text("All Week");
+				$("#weekText").text("All Week - From Jan 11 to 17 Apr, 2016");
             }
 
             var day = localStorage.getItem("timetable-display-day");
@@ -194,11 +213,33 @@
             localStorage.setItem("timetable-display-week",week);
             console.log({currentUser: currentUser, day: day, color: color, week: week});
             //TODO: change timetable image (week)
-
-
+			checkOptions(color, day, week);
         });
 
     });
+	
+	function checkOptions(color, day, week) {
+		if((day==2 || day==3 || day==5 || day==6) || week=="all")
+			setTimetableImage("timetable/" + color + "_" + day + "_all.png", day);
+		else if((day==1 || day==4) && week=="all")
+			setTimetableImage("timetable/" + color + "_" + day + "_all.png", day);
+		else if(day==1 && (week==4 || week==5 || week==6)) 
+			setTimetableImage("timetable/" + color + "_" + day + "_2wl.png", day);
+		else if(day==1 && (week!=4 && week!=5 && week!=6))
+			setTimetableImage("timetable/" + color + "_" + day + "_normal.png", day);	
+		else if(day==4 && (week==7 || week==8)) 
+			setTimetableImage("timetable/" + color + "_" + day + "_2wl.png", day);
+		else if(day==4 && (week!=7 && week!=8))
+			setTimetableImage("timetable/" + color + "_" + day + "_normal.png", day);
+		else if(day=="week" && (week!=4 && week!=5 && week!=6 && week!=7 && week!=8))
+			setTimetableImage("timetable/" + color + "_" + day + "_normal.png", day);					
+		else if(day=="week" && (week==7 || week==8)) 
+			setTimetableImage("timetable/" + color + "_" + day + "_78.png", day);
+		else if(day=="week" && (week==4 || week==5 || week==6)) 
+			setTimetableImage("timetable/" + color + "_" + day + "_46.png", day);			
+			
+		
+	}
 
     function setTimetableImage(path, day) {
         $("#timetable-image").attr({
@@ -206,10 +247,10 @@
         });
         switch (day) {
             case "week":
-                $("#timetable-image").attr({width: "60%", height: "60%"});
+                $("#timetable-image").animate({width: "60%", height: "60%"},300);
                 break;
             default:
-                $("#timetable-image").attr({width: "15%", height: "15%"});
+                $("#timetable-image").animate({width: "15%", height: "15%"},300);
                 break;
         }
     }

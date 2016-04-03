@@ -1,4 +1,4 @@
-<div class="container hidden text-center" id="loading-container">
+<div class="container hidden text-center animated fadeInUp" id="loading-container">
     <div class="row" id="loading">
 
     </div>
@@ -27,7 +27,10 @@
                 localStorage.removeItem("timetableID");
                 currentUser = demoUser[Math.floor(Math.random()*demoUser.length)];
 
-                Router.route("#timetable/" + currentUser);
+
+                $("#loading-container").addClass("animated fadeOutDown").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+                    Router.route("#timetable/" + currentUser);
+                });
             },2000);
         },2000);
     })

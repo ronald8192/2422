@@ -1,6 +1,6 @@
 <div class="container" id="page1">
     
-    <div class="row well" id="import-file-container">
+    <div class="row well animated fadeInRight" id="import-file-container">
         <div class="col-md-6 instructionHeader">
             <h1><b>Step 2 - Upload file</b></h1>
         </div>      
@@ -20,54 +20,8 @@
     	</div>             
     </div>
     
-      
-    
-    
 
-    <!--useless-->
-    <div class="hidden row well" id="color-option-container">
-        <div class="col-sm-12">
-            <h1>Color options</h1>
-        </div>
-        <div class="col-sm-12" style="margin-left: 16px;">
-            <div class="form-group" style="margin-top:0">
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="color-option" value="1" checked="true">
-                        <span class="circle"></span>
-                        <span class="check"></span>
-                        <font class="radio-text">Type 1</font>
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="color-option" value="2" checked="">
-                        <span class="circle"></span>
-                        <span class="check"></span>
-                        <font class="radio-text">Type 2</font>
-                    </label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="color-option" value="3" checked="">
-                        <span class="circle"></span>
-                        <span class="check"></span>
-                        <font class="radio-text">Type 3</font>
-                    </label>
-                </div>
-            </div>
-        </div>
-
-        <!--sample-->
-        <div class="row">
-            <!--<div class="col-sm-4"><h3 class="text-center">Type 1</h3><img src="timetable/TimetableTemplate.jpg" class="img-responsive" /></div>-->
-            <!--<div class="col-sm-4"><h3 class="text-center">Type 2</h3><img src="timetable/TimetableTemplate.jpg" class="img-responsive" /></div>-->
-            <!--<div class="col-sm-4"><h3 class="text-center">Type 3</h3><img src="timetable/TimetableTemplate.jpg" class="img-responsive" /></div>-->
-        </div>
-
-    </div>
-
-    <div class="row text-center" id="genBtn-container">
+    <div class="row text-center animated fadeInUp" id="genBtn-container">
         <button id="gen" type="submit" class="btn btn-raised btn-primary">Generate</button>
     </div>
 </div>
@@ -76,15 +30,21 @@
     $(function(){
         $.material.init();
 
+
+		setTimeout(function(){
+			$("#import-file-container").removeClass("animated fadeInRight");
+			$("#genBtn-container").removeClass("animated fadeInUp");
+
+		},1000);
         $("#gen").click(function(e){
             $("body").animate({
                 scrollTop: 0
             }, 400);
 
             $("#instruction-container").addClass("animated fadeOutLeft");
-            $("#import-file-container").addClass("animated fadeOutRight");
+            $("#import-file-container").addClass("animated fadeOutLeft");
             $("#color-option-container").addClass("animated fadeOutLeft");
-            $("#genBtn-container").addClass("animated fadeOutRight").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+            $("#genBtn-container").addClass("animated fadeOutDown").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
                 Router.route("#upload");
 //                $("#page1").hide(function(){
 //
