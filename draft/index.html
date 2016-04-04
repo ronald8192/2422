@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TimeTable Generator</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap-material-design/dist/css/ripples.min.css">
+
+    <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 text-right"><img src="assets/icon.jpg" id="header-icon" /></div>
+            <div class="col-sm-8"><h1>TimeTable Generator</h1></div>
+        </div>
+    </div>
+</header>
+<main id="view-main">
+    <div class="container">
+        <hr noshade="false" />
+        <div class="row">
+            <table>
+                <tr><td><h1>Instruction</h1></td></tr>
+                <tr>
+                    <td>
+                        <ol>
+                            <li>Step 1</li>
+                            <li>Step 2</li>
+                            <li>Step 3</li>
+                        </ol>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <hr noshade="false" />
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>Select file: </h1>
+            </div>
+            <div class="col-sm-6">
+                <input type="file">
+            </div>
+        </div>
+        <hr noshade="false" />
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Display option</h1>
+            </div>
+            <div class="col-sm-12">
+                <input type="radio" name="color-option" /> option 1 <br />
+                <input type="radio" name="color-option" /> Option 2 <br />
+                <input type="radio" name="color-option" /> Option 3 <br />
+            </div>
+        </div>
+        <hr noshade="false" />
+        <div class="row text-center">
+            <button id="gen" type="submit">Submit</button>
+        </div>
+    </div>
+
+</main>
+</body>
+</html>
